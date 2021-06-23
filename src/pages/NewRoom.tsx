@@ -1,12 +1,35 @@
-import { Link } from 'react-router-dom';
-import { Button } from '../components/Button'
-import { useAuth } from '../hooks/useAuth';
-import '../styles/auth.scss';
+import { FormEvent, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { Link, useHistory } from 'react-router-dom';
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
+import { Button } from '../components/Button';
+import { useAuth } from '../hooks/useAuth';
+import { database } from '../services/firebase';
+import '../styles/auth.scss';
 
 export function NewRoom() {
-  const { user, signInWithGoogle } = useAuth();
+  const { user } = useAuth();
+  const history = useHistory();
+  const [newRoom, setNewRoom] = useState('');
+
+  async function handleCreateRoom(event: FormEvent) {
+    event.preventDefault();
+
+    if (newRoom.trim() === '') {
+      return;
+    }
+
+    const roomRef = database.ref('rooms');
+
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      authorId: user?.id,
+    })
+
+    toast.success('Sala criada com sucesso');
+    history.push(`${firebaseRoom.key}`);
+  }
 
   function welcomeMessage() {
     if (!user) {
@@ -19,6 +42,7 @@ export function NewRoom() {
 
   return (
     <div id="page-auth">
+      <Toaster />
       <aside>
         <img src={illustrationImg} alt="A imagem mostra o conceito de perguntas 
         e respostas do app" />
@@ -33,10 +57,12 @@ export function NewRoom() {
           <img src={logoImg} alt="Letmeask" />
           <h1>{welcomeMessage()}</h1>
           <h2>Crie uma sala</h2>
-          <form>
+          <form onSubmit={handleCreateRoom}>
             <input
               type="text"
               placeholder="Nome da sala"
+              onChange={event => setNewRoom(event.target.value)}
+              value={newRoom}
             />
             <Button type="submit">
               Criar sala
