@@ -1,29 +1,32 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { useHistory } from 'react-router-dom';
 import { firebase, auth } from '../services/firebase';
 
 type User = {
   id: string;
   name: string;
   avatar: string;
-}
+};
 
 type AuthContextType = {
   user: User | undefined;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
-}
+};
 
 type AuthContextProviderProps = {
   children: ReactNode;
-}
+};
 
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
+  const history = useHistory();
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         const { displayName, photoURL, uid } = user;
 
@@ -34,14 +37,14 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
         setUser({
           id: uid,
           name: displayName,
-          avatar: photoURL
-        })
+          avatar: photoURL,
+        });
       }
-    })
+    });
 
     return () => {
       unsubscribe();
-    }
+    };
   }, []);
 
   async function signInWithGoogle() {
@@ -59,15 +62,17 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
       setUser({
         id: uid,
         name: displayName,
-        avatar: photoURL
-      })
+        avatar: photoURL,
+      });
     }
   }
 
   async function signOut() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const loadingToast = toast.loading('Saindo');
+    await auth.signOut();
+    toast.success('Usuário deslogado', { id: loadingToast });
 
-    const result = await auth.signOut();
+    history.push('/');
   }
 
   return (

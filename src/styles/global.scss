@@ -1,3 +1,8 @@
+::selection {
+  color: #fff;
+  background-color: #835afd;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,9 +11,12 @@
 
 body {
   background-color: #f8f8f8;
-  color: #29292E;
+  color: #29292e;
 }
 
-body, input, button, textarea {
+body,
+input,
+button,
+textarea {
   font: 400 16px 'Roboto', sans-serif;
 }

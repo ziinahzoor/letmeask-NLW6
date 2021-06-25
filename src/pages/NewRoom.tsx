@@ -17,39 +17,39 @@ export function NewRoom() {
     event.preventDefault();
 
     if (newRoom.trim() === '') {
+      toast('Digite um nome para a sala', { icon: '⚠️' });
       return;
     }
 
     const roomRef = database.ref('rooms');
 
+    const loadingToast = toast.loading('Criando sala');
     const firebaseRoom = await roomRef.push({
       title: newRoom,
       authorId: user?.id,
-    })
+    });
 
-    toast.success('Sala criada com sucesso');
-    history.push(`${firebaseRoom.key}`);
+    toast.success('Sala criada com sucesso', { id: loadingToast });
+    history.push(`/admin/${roomRef.key}/${firebaseRoom.key}`);
   }
 
   function welcomeMessage() {
-    if (!user) {
-      return;
-    }
-    else {
-      return `Olá, ${user.name}!`;
-    }
+    return `Olá, ${user?.name}!`;
   }
 
   return (
     <div id="page-auth">
       <Toaster />
       <aside>
-        <img src={illustrationImg} alt="A imagem mostra o conceito de perguntas 
-        e respostas do app" />
+        <img
+          src={illustrationImg}
+          alt="A imagem mostra o conceito de perguntas 
+        e respostas do app"
+        />
         <strong>Se você não sabe a resposta, alguém te conta</strong>
         <p>
-          Descubra coisas novas, passe adiante o que já sabe. Venha
-          compartilhar seu conhecimento com a gente.
+          Descubra coisas novas, passe adiante o que já sabe. Venha compartilhar
+          seu conhecimento com a gente.
         </p>
       </aside>
       <main>
@@ -61,12 +61,10 @@ export function NewRoom() {
             <input
               type="text"
               placeholder="Nome da sala"
-              onChange={event => setNewRoom(event.target.value)}
+              onChange={(event) => setNewRoom(event.target.value)}
               value={newRoom}
             />
-            <Button type="submit">
-              Criar sala
-            </Button>
+            <Button type="submit">Criar sala</Button>
           </form>
           <p>
             Para entrar em uma sala existente clique <Link to="/">aqui</Link>.
@@ -74,5 +72,5 @@ export function NewRoom() {
         </div>
       </main>
     </div>
-  )
+  );
 }

@@ -16,9 +16,12 @@ export function Home() {
 
   async function handleCreateRoom() {
     if (!user) {
+      const loadingToast = toast.loading('Carregando usuário');
       await signInWithGoogle();
+      toast.success('Usuário autenticado', { id: loadingToast });
+    } else {
+      toast.success('Usuário já está autenticado');
     }
-    toast.success('Usuário autenticado com sucesso');
     history.push('/rooms/new');
   }
 
@@ -26,16 +29,19 @@ export function Home() {
     event.preventDefault();
 
     if (roomCode.trim() === '') {
+      toast('Digite o nome da sala', { icon: '⚠️' });
       return;
     }
 
+    const loadingToast = toast.loading('Procurando sala');
     const roomRef = await database.ref(`rooms/${roomCode}`).get();
 
-    if (!roomRef.exists()) {
-      toast.error('Sala não existe');
+    if (!roomRef.exists() || roomRef.val().endedAt) {
+      toast.error('Sala não existe', { id: loadingToast });
       return;
     }
 
+    toast.dismiss(loadingToast);
     history.push(`rooms/${roomCode}`);
   }
 
@@ -43,12 +49,15 @@ export function Home() {
     <div id="page-auth">
       <Toaster />
       <aside>
-        <img src={illustrationImg} alt="A imagem mostra o conceito de perguntas 
-        e respostas do app" />
+        <img
+          src={illustrationImg}
+          alt="A imagem mostra o conceito de perguntas 
+        e respostas do app"
+        />
         <strong>Se você não sabe a resposta, alguém te conta</strong>
         <p>
-          Descubra coisas novas, passe adiante o que já sabe. Venha
-          compartilhar seu conhecimento com a gente.
+          Descubra coisas novas, passe adiante o que já sabe. Venha compartilhar
+          seu conhecimento com a gente.
         </p>
       </aside>
       <main>
@@ -56,22 +65,20 @@ export function Home() {
           <img src={logoImg} alt="Letmeask" />
           <button onClick={handleCreateRoom} className="create-room">
             <img src={googleIconImg} alt="Logo Google" />
-            Crie sua sala com o Google
+            Entre e crie sua sala com o Google
           </button>
           <div className="separator">Ou entre em uma sala existente</div>
           <form onSubmit={handleJoinRoom}>
             <input
               type="text"
               placeholder="Digite o código da sala"
-              onChange={event => setRoomCode(event.target.value)}
+              onChange={(event) => setRoomCode(event.target.value)}
               value={roomCode}
             />
-            <Button type="submit">
-              Entrar na sala
-            </Button>
+            <Button type="submit">Entrar na sala</Button>
           </form>
         </div>
       </main>
     </div>
-  )
+  );
 }
