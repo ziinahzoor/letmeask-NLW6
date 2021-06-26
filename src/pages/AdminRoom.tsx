@@ -25,6 +25,11 @@ export function AdminRoom() {
     const loadingToast = toast.loading('Saindo');
     await signOut();
     toast.success('Usuário deslogado', { id: loadingToast });
+    history.push(`/rooms/${roomId}`);
+  }
+
+  async function handleChangeContext() {
+    history.push(`/rooms/${roomId}`);
   }
 
   async function handleEndRoom() {
@@ -60,18 +65,19 @@ export function AdminRoom() {
     }
   }
 
-  if (!user) {
-    history.push(`/rooms/${roomId}`);
-  }
-
   return (
     <div id="page-room">
       <Toaster position="top-center" reverseOrder={false} />
       <header>
         <div className="content">
-          <Link to="../../">
-            <img src={logoImg} alt="" />
-          </Link>
+          <div>
+            <Link to="../../">
+              <img src={logoImg} alt="" />
+            </Link>
+            {user && (
+              <Button onClick={handleChangeContext}>Visão do usuário</Button>
+            )}
+          </div>
           <div>
             <RoomCode code={roomId} />
             <Button isOutlined onClick={handleEndRoom}>

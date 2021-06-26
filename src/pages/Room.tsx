@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -17,6 +17,7 @@ type RoomParams = {
 };
 
 export function Room() {
+  const history = useHistory();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const [newQuestion, setNewQuestion] = useState('');
@@ -37,6 +38,10 @@ export function Room() {
     const loadingToast = toast.loading('Saindo');
     await signOut();
     toast.success('Usuário deslogado', { id: loadingToast });
+  }
+
+  async function handleChangeContext() {
+    history.push(`/admin/rooms/${roomId}`);
   }
 
   async function handleSendQuestion(event: FormEvent) {
@@ -96,9 +101,16 @@ export function Room() {
       <Toaster position="top-center" reverseOrder={false} />
       <header>
         <div className="content">
-          <Link to="../">
-            <img src={logoImg} alt="Home Page" />
-          </Link>
+          <div>
+            <Link to="../../">
+              <img src={logoImg} alt="" />
+            </Link>
+            {user && (
+              <Button onClick={handleChangeContext}>
+                Visão do administrador
+              </Button>
+            )}
+          </div>
           <div>
             <RoomCode code={roomId} />
             {!user && <Button onClick={handleLogin}>Entrar</Button>}
