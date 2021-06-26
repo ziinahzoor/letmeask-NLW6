@@ -1,5 +1,4 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { auth, firebase } from '../services/firebase';
 
 type User = {

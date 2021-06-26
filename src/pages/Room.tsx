@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -21,7 +21,6 @@ export function Room() {
   const [newQuestion, setNewQuestion] = useState('');
   const { user, signInWithGoogle, signOut } = useAuth();
   const { title, questions } = useRoom(roomId);
-  const history = useHistory();
 
   async function handleLogin() {
     if (!user) {
