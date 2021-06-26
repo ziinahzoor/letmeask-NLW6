@@ -73,14 +73,20 @@ export function Room() {
     questionId: string,
     likeId: string | undefined
   ) {
-    if (likeId) {
-      await database
-        .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
-        .remove();
+    if (user) {
+      if (likeId) {
+        await database
+          .ref(`rooms/${roomId}/questions/${questionId}/likes/${likeId}`)
+          .remove();
+      } else {
+        await database
+          .ref(`rooms/${roomId}/questions/${questionId}/likes`)
+          .push({
+            authorId: user?.id,
+          });
+      }
     } else {
-      await database.ref(`rooms/${roomId}/questions/${questionId}/likes`).push({
-        authorId: user?.id,
-      });
+      toast.error('Faça login para curtir a pergunta');
     }
   }
 
@@ -90,7 +96,7 @@ export function Room() {
       <header>
         <div className="content">
           <Link to="../">
-            <img src={logoImg} alt="" />
+            <img src={logoImg} alt="Home Page" />
           </Link>
           <div>
             <RoomCode code={roomId} />
