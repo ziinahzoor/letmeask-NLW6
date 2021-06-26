@@ -8,6 +8,7 @@ import { RoomCode } from '../components/RoomCode';
 import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom';
 import { database } from '../services/firebase';
+import '../styles/global.scss';
 import '../styles/question.scss';
 import '../styles/room.scss';
 
