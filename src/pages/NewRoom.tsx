@@ -33,10 +33,6 @@ export function NewRoom() {
     history.push(`/admin/${roomRef.key}/${firebaseRoom.key}`);
   }
 
-  function welcomeMessage() {
-    return `Olá, ${user?.name}!`;
-  }
-
   return (
     <div id="page-auth">
       <Toaster />
@@ -55,7 +51,6 @@ export function NewRoom() {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Letmeask" />
-          <h1>{welcomeMessage()}</h1>
           <h2>Crie uma sala</h2>
           <form onSubmit={handleCreateRoom}>
             <input
