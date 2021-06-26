@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 import { Question } from '../components/Question';
@@ -16,11 +16,30 @@ type RoomParams = {
 };
 
 export function Room() {
-  const { user, signOut } = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
   const [newQuestion, setNewQuestion] = useState('');
+  const { user, signInWithGoogle, signOut } = useAuth();
   const { title, questions } = useRoom(roomId);
+  const history = useHistory();
+
+  async function handleLogin() {
+    if (!user) {
+      const loadingToast = toast.loading('Carregando usuário');
+      await signInWithGoogle();
+      toast.success('Usuário autenticado', { id: loadingToast });
+    } else {
+      toast.success('Usuário já está autenticado');
+    }
+    history.push(`/rooms/${roomId}`);
+  }
+
+  async function handleLogout() {
+    const loadingToast = toast.loading('Saindo');
+    await signOut();
+    toast.success('Usuário deslogado', { id: loadingToast });
+    history.push(`/rooms/${roomId}`);
+  }
 
   async function handleSendQuestion(event: FormEvent) {
     event.preventDefault();
@@ -78,7 +97,7 @@ export function Room() {
           </Link>
           <div>
             <RoomCode code={roomId} />
-            {user && <Button onClick={signOut}>Sair</Button>}
+            {user && <Button onClick={handleLogout}>Sair</Button>}
           </div>
         </div>
       </header>
@@ -110,7 +129,8 @@ export function Room() {
               </div>
             ) : (
               <span>
-                Para enviar uma pergunta, <button>faça login</button>
+                Para enviar uma pergunta,{' '}
+                <button onClick={handleLogin}>faça login</button>
               </span>
             )}
             <Button type="submit" disabled={!user}>
