@@ -11,7 +11,7 @@ import '../styles/auth.scss';
 
 export function Home() {
   const history = useHistory();
-  const { user, signInWithGoogle } = useAuth();
+  const { user, signInWithGoogle, signOut } = useAuth();
   const [roomCode, setRoomCode] = useState('');
 
   async function handleLogin() {
@@ -22,6 +22,12 @@ export function Home() {
     } else {
       history.push('/rooms/new');
     }
+  }
+
+  async function handleLogout() {
+    const loadingToast = toast.loading('Saindo');
+    await signOut();
+    toast.success('Usuário deslogado', { id: loadingToast });
   }
 
   async function handleJoinRoom(event: FormEvent) {
@@ -68,7 +74,7 @@ export function Home() {
               <h1>Olá, {user.name.split(' ')[0]}</h1>
               <div className="user-logged">
                 <Button onClick={handleLogin}>Criar uma sala</Button>
-                <Button id="logout">Sair</Button>
+                <Button onClick={handleLogout}>Sair</Button>
               </div>
             </>
           )}
