@@ -59,7 +59,6 @@
         padding: 16px;
         border-radius: 8px;
         background: #fefefe;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         resize: vertical;
         min-height: 130px;
       }
@@ -78,6 +77,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
+            border: 2px solid #835afd;
           }
 
           span {

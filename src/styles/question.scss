@@ -1,9 +1,4 @@
 .question {
-  ::selection {
-    color: #835afd;
-    background-color: #fff;
-  }
-
   background: #fefefe;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
@@ -14,8 +9,13 @@
   }
 
   &.highlighted {
+    ::selection {
+      color: #835afd;
+      background-color: #fff;
+    }
+
     background: #835afd;
-    border: 1px solid #e559f9;
+    box-shadow: 0 0 5px 3px #e559f9;
 
     p {
       color: #fefefe;
@@ -24,11 +24,11 @@
     footer {
       .user-info {
         img {
-          border-color: #fefefe;
+          border-color: #fff;
         }
 
         span {
-          color: #fefefe;
+          color: #f8f8f8;
         }
       }
 
@@ -42,10 +42,10 @@
 
         &.like-button {
           svg path {
-            stroke: #29292e;
+            stroke: #835afd;
           }
 
-          .liked {
+          &.liked {
             color: #fefefe;
             svg path {
               fill: #e559f9;
@@ -78,7 +78,7 @@
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        border: 1px solid #835afd;
+        border: 2px solid #835afd;
       }
 
       span {
@@ -113,7 +113,7 @@
           color: #835afd;
 
           svg path {
-            stroke: #f8f8f8;
+            stroke: #fefefe;
             fill: #835afd;
           }
         }

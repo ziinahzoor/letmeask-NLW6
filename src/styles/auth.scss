@@ -57,6 +57,10 @@ main {
   text-align: center;
 
   > img {
+    &#user-avatar {
+      margin: 16px;
+      border-radius: 50%;
+    }
     align-self: center;
   }
 
@@ -77,6 +81,10 @@ main {
     input {
       width: 100%;
     }
+  }
+
+  h1 {
+    font-family: 'Poppins', sans-serif;
   }
 
   h2 {
