@@ -14,7 +14,7 @@ export function Home() {
   const { user, signInWithGoogle } = useAuth();
   const [roomCode, setRoomCode] = useState('');
 
-  async function handleCreateRoom() {
+  async function handleLogin() {
     if (!user) {
       const loadingToast = toast.loading('Carregando usuário');
       await signInWithGoogle();
@@ -63,7 +63,7 @@ export function Home() {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Letmeask" />
-          <button onClick={handleCreateRoom} className="create-room">
+          <button onClick={handleLogin} className="create-room">
             <img src={googleIconImg} alt="Logo Google" />
             Entre e crie sua sala com o Google
           </button>
