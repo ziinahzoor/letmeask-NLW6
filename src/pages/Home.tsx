@@ -20,9 +20,8 @@ export function Home() {
       await signInWithGoogle();
       toast.success('Usuário autenticado', { id: loadingToast });
     } else {
-      toast.success('Usuário já está autenticado');
+      history.push('/rooms/new');
     }
-    history.push('/rooms/new');
   }
 
   async function handleJoinRoom(event: FormEvent) {
@@ -63,11 +62,25 @@ export function Home() {
       <main>
         <div className="main-content">
           <img src={logoImg} alt="Letmeask" />
-          <button onClick={handleLogin} className="create-room">
-            <img src={googleIconImg} alt="Logo Google" />
-            Entre e crie sua sala com o Google
-          </button>
-          <div className="separator">Ou entre em uma sala existente</div>
+          {user && (
+            <>
+              <img id="user-avatar" src={user.avatar} alt="Usuário" />
+              <h1>Olá, {user.name.split(' ')[0]}</h1>
+              <div className="user-logged">
+                <Button onClick={handleLogin}>Criar uma sala</Button>
+                <Button id="logout">Sair</Button>
+              </div>
+            </>
+          )}
+          {!user && (
+            <button onClick={handleLogin} className="create-room">
+              <img src={googleIconImg} alt="Logo Google" />
+              Entre com sua conta Google
+            </button>
+          )}
+          <div className="separator">
+            {user ? 'Entre em uma sala' : 'Ou visite uma sala'}
+          </div>
           <form onSubmit={handleJoinRoom}>
             <input
               type="text"
