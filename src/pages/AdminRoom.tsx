@@ -21,12 +21,10 @@ export function AdminRoom() {
   const roomId = params.id;
   const { title, questions } = useRoom(roomId);
 
-  //TODO:Implementar
-  async function handleSignOut() {
-    if (user) {
-      await signOut();
-    }
-    window.location.reload(); //melhorar
+  async function handleLogout() {
+    const loadingToast = toast.loading('Saindo');
+    await signOut();
+    toast.success('Usuário deslogado', { id: loadingToast });
   }
 
   async function handleEndRoom() {
@@ -62,10 +60,9 @@ export function AdminRoom() {
     }
   }
 
-  //TODO: Handle admin not logged
-  // if (!user) {
-  //   return <h1>Admin não logado</h1>;
-  // }
+  if (!user) {
+    history.push(`/rooms/${roomId}`);
+  }
 
   return (
     <div id="page-room">
@@ -80,6 +77,7 @@ export function AdminRoom() {
             <Button isOutlined onClick={handleEndRoom}>
               Encerrar sala
             </Button>
+            <Button onClick={handleLogout}>Sair</Button>
           </div>
         </div>
       </header>
