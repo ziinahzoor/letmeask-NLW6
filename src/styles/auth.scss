@@ -60,8 +60,20 @@ main {
     &#user-avatar {
       margin: 16px;
       border-radius: 50%;
+      box-shadow: 0 0 5px 5px #865afd;
     }
     align-self: center;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    button {
+      font-size: 14px;
+      height: 40px;
+      width: 50%;
+    }
   }
 
   form {
