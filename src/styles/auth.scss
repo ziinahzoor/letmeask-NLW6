@@ -5,9 +5,14 @@
 }
 
 aside {
+  ::selection {
+    background-color: #fff;
+    color: #865afd;
+  }
+
   flex: 6;
-  background-color: #865AFD;
-  color: #FFF;
+  background-color: #865afd;
+  color: #fff;
 
   display: flex;
   flex-direction: column;
@@ -20,7 +25,7 @@ aside {
   }
 
   strong {
-    font: 700 36px 'Poppins', sans-serif; 
+    font: 700 36px 'Poppins', sans-serif;
     line-height: 42px;
     margin-top: 16px;
   }
@@ -29,7 +34,7 @@ aside {
     font-size: 20px;
     line-height: 32px;
     margin-top: 16px;
-    color: #F8F8F8;
+    color: #f8f8f8;
   }
 }
 
@@ -60,15 +65,16 @@ main {
       height: 50px;
       border-radius: 8px;
       padding: 0 16px;
-      background-color: #FFF;
-      border: 1px solid #A8A8B3;
+      background-color: #fff;
+      border: 1px solid #a8a8b3;
     }
 
     button {
       margin-top: 16px;
     }
 
-    button, input {
+    button,
+    input {
       width: 100%;
     }
   }
@@ -85,7 +91,7 @@ main {
     margin-top: 16px;
 
     a {
-      color: #E559F9;
+      color: #e559f9;
     }
   }
 
@@ -94,9 +100,9 @@ main {
     height: 50px;
     border-radius: 8px;
     font-weight: 500;
-    background: #EA4335;
-    color: #FFF;
-    
+    background: #ea4335;
+    color: #fff;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -117,7 +123,7 @@ main {
 
   .separator {
     font-size: 14px;
-    color: #A8A8B3;
+    color: #a8a8b3;
 
     margin: 32px 0;
     display: flex;
@@ -127,7 +133,7 @@ main {
       content: '';
       flex: 1;
       height: 1px;
-      background: #A8A8B3;
+      background: #a8a8b3;
       margin-right: 16px;
     }
 
@@ -135,7 +141,7 @@ main {
       content: '';
       flex: 1;
       height: 1px;
-      background: #A8A8B3;
+      background: #a8a8b3;
       margin-left: 16px;
     }
   }
