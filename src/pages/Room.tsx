@@ -31,14 +31,12 @@ export function Room() {
     } else {
       toast.success('Usuário já está autenticado');
     }
-    history.push(`/rooms/${roomId}`);
   }
 
   async function handleLogout() {
     const loadingToast = toast.loading('Saindo');
     await signOut();
     toast.success('Usuário deslogado', { id: loadingToast });
-    history.push(`/rooms/${roomId}`);
   }
 
   async function handleSendQuestion(event: FormEvent) {
@@ -97,6 +95,7 @@ export function Room() {
           </Link>
           <div>
             <RoomCode code={roomId} />
+            {!user && <Button onClick={handleLogin}>Entrar</Button>}
             {user && <Button onClick={handleLogout}>Sair</Button>}
           </div>
         </div>
@@ -128,10 +127,7 @@ export function Room() {
                 <span>{user.name}</span>
               </div>
             ) : (
-              <span>
-                Para enviar uma pergunta,{' '}
-                <button onClick={handleLogin}>faça login</button>
-              </span>
+              <span>Para enviar uma pergunta, faça login.</span>
             )}
             <Button type="submit" disabled={!user}>
               Enviar pergunta

@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { useHistory } from 'react-router-dom';
-import { firebase, auth } from '../services/firebase';
+import { auth, firebase } from '../services/firebase';
 
 type User = {
   id: string;
@@ -22,7 +21,6 @@ type AuthContextProviderProps = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps) {
-  const history = useHistory();
   const [user, setUser] = useState<User>();
 
   useEffect(() => {
@@ -68,11 +66,8 @@ export function AuthContextProvider(props: AuthContextProviderProps) {
   }
 
   async function signOut() {
-    const loadingToast = toast.loading('Saindo');
     await auth.signOut();
-    toast.success('Usuário deslogado', { id: loadingToast });
-
-    history.push('/');
+    setUser(undefined);
   }
 
   return (
