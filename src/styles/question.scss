@@ -18,7 +18,7 @@
     box-shadow: 0 0 5px 3px #e559f9;
 
     p {
-      color: #fefefe;
+      color: #fff;
     }
 
     footer {
@@ -58,6 +58,9 @@
 
   &.answered {
     background: #dbdcdd;
+    p {
+      color: #737380;
+    }
   }
 
   p {
