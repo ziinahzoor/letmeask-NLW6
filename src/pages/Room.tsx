@@ -105,7 +105,7 @@ export function Room() {
             <Link to="../../">
               <img src={logoImg} alt="" />
             </Link>
-            {user && (
+            {user && user?.id === authorId && (
               <Button onClick={handleChangeContext}>
                 Visão do administrador
               </Button>
