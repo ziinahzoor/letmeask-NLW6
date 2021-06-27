@@ -48,7 +48,7 @@ export function Room() {
     event.preventDefault();
 
     if (newQuestion.trim() === '') {
-      toast('Nada foi digitado no campo de pesquisa', {
+      toast('Nada foi digitado no campo de pergunta', {
         icon: '⚠️',
       });
       return;
