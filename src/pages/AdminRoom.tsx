@@ -19,7 +19,7 @@ export function AdminRoom() {
   const { user, signOut } = useAuth();
   const params = useParams<RoomParams>();
   const roomId = params.id;
-  const { title, questions } = useRoom(roomId);
+  const { authorId, title, questions } = useRoom(roomId);
 
   async function handleLogout() {
     const loadingToast = toast.loading('Saindo');

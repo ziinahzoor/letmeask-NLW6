@@ -22,7 +22,7 @@ export function Room() {
   const roomId = params.id;
   const [newQuestion, setNewQuestion] = useState('');
   const { user, signInWithGoogle, signOut } = useAuth();
-  const { title, questions } = useRoom(roomId);
+  const { authorId, title, questions } = useRoom(roomId);
 
   async function handleLogin() {
     if (!user) {
